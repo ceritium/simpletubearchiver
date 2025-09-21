@@ -94,6 +94,14 @@ Rails.application.configure do
     # /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   ]
 
+  # Allow additional hosts from ALLOWED_HOSTS env var (comma-separated)
+  if ENV["ALLOWED_HOSTS"]
+    ENV["ALLOWED_HOSTS"].split(",").each do |host|
+      host = host.strip
+      config.hosts << (host.start_with?("/") ? eval(host) : host) unless host.empty?
+    end
+  end
+
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
