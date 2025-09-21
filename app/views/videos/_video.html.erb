@@ -1,0 +1,32 @@
+<div id="<%= dom_id(video) %>" class="col">
+  <div class="card mb-3">
+    <%= link_to item_path(video) do %>
+      <% if video.thumbnail_image.present? %>
+        <%= image_tag rails_blob_path(video.thumbnail_image), class: "card-img-top" %>
+      <% end %>
+    <% end %>
+    <div class="card-body">
+      <h5 class="card-title">
+        <%= video.title %>
+        <%= Time.current %>
+      </h5>
+      <p class="card-text">
+        <%= video.description %>
+      </p>
+
+      <% case video.download_status %>
+      <% when "pending", "failed", nil %>
+        <%= button_to "fetch", fetch_item_path(video),  data: { disable_with: "Processing..." }, method: :post, class: "btn btn-sm btn-info" %>
+        <% if video.failed? %>
+          <span class="badge bg-danger"> download failed </span>
+        <% end %>
+      <% when "queued", "downloading" %>
+        <span class="badge bg-warning text-dark"><%= video.download_status %></span>
+      <% when "completed" %>
+        <span class="badge bg-success"><%= video.download_status %></span>
+      <% when "failed" %>
+        <span class="badge bg-danger"><%= video.download_status %></span>
+      <% end %>
+    </div>
+  </div>
+</div>

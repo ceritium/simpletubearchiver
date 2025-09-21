@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    image: simpletuvearchiver
+    container_name: simpletuvearchiver-web
+    ports:
+      - "80:80"
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - DISABLE_SSL=true
+    volumes:
+      - ./storage:/rails/storage
+
+  jobs:
+    image: simpletuvearchiver
+    container_name: simpletuvearchiver-jobs
+    command: ["./bin/jobs"]
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - DISABLE_SSL=true
+    volumes:
+      - ./storage:/rails/storage

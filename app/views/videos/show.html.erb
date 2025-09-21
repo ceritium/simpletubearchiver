@@ -1,0 +1,57 @@
+<%= turbo_stream_from "videos" %>
+
+<div class="container-fluid p-4">
+  <% if @video.video_file.present? %>
+    <div class="video-container" data-controller="video-player" data-video-player-video-id-value="<%= @video.id %>">
+      <!-- Thumbnail Image (shown initially) -->
+      <% if @video.thumbnail_image.present? %>
+        <div class="thumbnail-wrapper position-relative" 
+             data-video-player-target="thumbnail"
+             data-action="click->video-player#playVideo"
+             style="cursor: pointer;">
+          <%= image_tag @video.thumbnail_image, 
+                alt: @video.title,
+                class: "img-fluid rounded shadow-lg w-100 bg-black",
+                style: "max-height: 80vh; object-fit: contain;" %>
+          
+          <!-- Play button overlay -->
+          <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center play-overlay rounded" 
+               style="background: rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.3s ease;">
+            <div class="play-button bg-white rounded-circle p-3 shadow-lg d-flex align-items-center justify-content-center"
+                 style="width: 80px; height: 80px; transition: transform 0.2s ease;">
+              <i class="bi bi-play-fill fs-1 text-dark" style="margin-left: 3px;"></i>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <!-- Fallback if no thumbnail -->
+        <div class="thumbnail-wrapper position-relative bg-light rounded d-flex align-items-center justify-content-center" 
+             data-video-player-target="thumbnail"
+             data-action="click->video-player#playVideo"
+             style="cursor: pointer; aspect-ratio: 16/9; max-height: 80vh;">
+          <div class="text-muted text-center">
+            <i class="bi bi-play-circle display-1 mb-2"></i>
+            <p class="fs-5 mb-0">Click to play video</p>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Video Player (hidden initially) -->
+      <video controls 
+             class="img-fluid rounded shadow-lg w-100 bg-black" 
+             style="display: none; max-height: 80vh; object-fit: contain;"
+             data-video-player-target="video"
+             preload="metadata">
+        <source src="<%= rails_storage_proxy_path(@video.video_file) %>" type="<%= @video.video_file.content_type %>">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  <% else %>
+    <div class="alert alert-warning text-center" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      Video is not available yet. It may still be processing.
+    </div>
+  <% end %>
+
+  <h2 class="display-6 fw-bold text-dark mb-4"><%= @video.title %></h2>
+</div>

@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subscription: one
+  reference: MyString
+  title: MyString
+  description: MyText
+  duration: 1
+  uploaded_at: 2025-09-18 22:11:20
+  thumbnail_url: MyString
+  status: 1
+  download_status: 1
+
+two:
+  subscription: two
+  reference: MyString
+  title: MyString
+  description: MyText
+  duration: 1
+  uploaded_at: 2025-09-18 22:11:20
+  thumbnail_url: MyString
+  status: 1
+  download_status: 1

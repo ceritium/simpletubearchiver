@@ -1,0 +1,35 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+
+// Video player custom styles
+.video-container {
+    position: relative;
+
+    .thumbnail-wrapper {
+        overflow: hidden;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.02);
+
+            .play-overlay {
+                opacity: 1 !important;
+            }
+
+            .play-button {
+                transform: scale(1.1);
+                background-color: rgba(255, 255, 255, 0.95) !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            }
+        }
+    }
+
+    .play-button {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(8px);
+    }
+
+    video {
+        transition: opacity 0.3s ease-in-out;
+    }
+}

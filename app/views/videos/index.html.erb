@@ -1,0 +1,21 @@
+<%= turbo_stream_from "videos" %>
+<div class="row">
+  <div class="col-2">
+    <div class="list-group">
+      <% Subscription.all.each do |subscription| %>
+        <% classes = "list-group-item list-group-item-action" %>
+        <% if subscription.id == params[:subscription_id]&.to_i %>
+          <% classes << " active" %>
+        <% end %>
+        <%= link_to subscription.name, items_path(subscription_id: subscription.id), class: classes %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col">
+    <%= paginate @videos %>
+    <div id="videos" class="row row-cols-3">
+      <%= render @videos %>
+    </div>
+    <%= paginate @videos %>
+  </div>
+</div>
