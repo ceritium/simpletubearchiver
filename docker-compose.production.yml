@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  web:
+    image: ghcr.io/ceritium/simpletuvearchiver:latest
+    container_name: simpletuvearchiver-web
+    ports:
+      - "80:80"
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - DISABLE_SSL=true
+    volumes:
+      - ./storage:/rails/storage
+    restart: unless-stopped
+
+  jobs:
+    image: ghcr.io/ceritium/simpletuvearchiver:latest
+    container_name: simpletuvearchiver-jobs
+    command: ["./bin/jobs"]
+    environment:
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      - DISABLE_SSL=true
+    volumes:
+      - ./storage:/rails/storage
+    restart: unless-stopped
