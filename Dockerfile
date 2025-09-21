@@ -72,6 +72,13 @@ RUN rm -rf node_modules
 # Final stage for app image
 FROM base
 
+# Add labels for public container registry
+LABEL org.opencontainers.image.source=https://github.com/ceritium/simpletubearchiver
+LABEL org.opencontainers.image.description="Simple Tuve Archiver - Rails app for archiving YouTube videos"
+LABEL org.opencontainers.image.licenses=MIT
+LABEL org.opencontainers.image.title="Simple Tuve Archiver"
+LABEL org.opencontainers.image.vendor="ceritium"
+
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails

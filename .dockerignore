@@ -1,6 +1,6 @@
 # See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
 
-# Ignore git directory.
+# Ignore git directory and git files
 /.git/
 /.gitignore
 
@@ -22,15 +22,17 @@
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
+!/tmp/pids/
 !/tmp/pids/.keep
 
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
 !/storage/.keep
 /tmp/storage/*
+!/tmp/storage/
 !/tmp/storage/.keep
 
-# Ignore assets.
+# Ignore built assets
 /node_modules/
 /app/assets/builds/*
 !/app/assets/builds/.keep
@@ -48,4 +50,29 @@
 
 # Ignore Docker-related files
 /.dockerignore
+/Dockerfile*
+/docker-compose*.yml
+
+# Ignore documentation
+/README.md
+/*.md
+
+# Ignore test files
+/test/
+/spec/
+/coverage/
+
+# Ignore development scripts
+/release.sh
+
+# Ignore IDE and editor files
+/.vscode/
+/.idea/
+*.swp
+*.swo
+*~
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
 /Dockerfile*
