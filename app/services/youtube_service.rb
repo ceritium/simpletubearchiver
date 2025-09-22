@@ -326,13 +326,8 @@ class YoutubeService
     def download_video(url)
       return nil unless url.present?
 
-      # Extract video info from URL for filename pattern
-      info = info_from_url(url)
-      return nil unless info && info[:type] == "video"
-
-      video_id = info[:reference]
-
-      downloads_dir = Rails.root.join("storage", "downloads", video_id)
+      random = SecureRandom.hex(8)
+      downloads_dir = Rails.root.join("storage", "downloads", random)
       FileUtils.mkdir_p(downloads_dir)
 
       filename_template = "%(uploader)s - %(title)s [%(id)s].%(ext)s"
@@ -361,7 +356,7 @@ class YoutubeService
         if video_file && File.exist?(video_file)
           video_file
         else
-          Rails.logger.error "Downloaded file not found for video ID: #{video_id}"
+          Rails.logger.error "Downloaded file not found for url: #{url}"
           nil
         end
       else
