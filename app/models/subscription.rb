@@ -1,5 +1,5 @@
 class Subscription < ApplicationRecord
-  has_many :videos, dependent: :destroy_async
+  has_many :videos, dependent: :destroy
 
   has_one_attached :image
 

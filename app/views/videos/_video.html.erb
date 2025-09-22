@@ -1,14 +1,18 @@
 <div id="<%= dom_id(video) %>" class="col">
   <div class="card mb-3">
-    <%= link_to item_path(video) do %>
+    <%= link_to item_path(video), class: "position-relative" do %>
       <% if video.thumbnail_image.present? %>
         <%= image_tag rails_blob_path(video.thumbnail_image), class: "card-img-top" %>
+        <% if video.duration %>
+          <span class="position-absolute bottom-0 end-0 badge text-bg-secondary">
+            <%= mm_ss(video.duration) %>
+          </span>
+        <% end %>
       <% end %>
     <% end %>
     <div class="card-body">
       <h5 class="card-title">
         <%= video.title %>
-        <%= Time.current %>
       </h5>
       <p class="card-text">
         <%= video.description %>
