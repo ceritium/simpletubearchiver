@@ -351,8 +351,10 @@ class YoutubeService
       if success
         # Try to find the downloaded file
         pattern = File.join(downloads_dir, "*[#{video_id}].*")
+        puts "pattern: #{pattern}"
         files = Dir.glob(pattern)
         video_file = files.find { |f| !f.end_with?(".info.json", ".jpg", ".webp", ".png") }
+        puts "video_file: #{video_file}"
 
         if video_file && File.exist?(video_file)
           video_file
