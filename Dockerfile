@@ -20,7 +20,8 @@ WORKDIR /rails
 # Install base packages including ffmpeg for yt-dlp video processing
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 python3 python3-pip ffmpeg && \
-    pip3 install --break-system-packages yt-dlp && \
+    curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && \
+    chmod +x /usr/local/bin/yt-dlp && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
