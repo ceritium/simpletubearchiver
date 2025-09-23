@@ -13,7 +13,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "videos#index"
 
-  resources :subscriptions
+  resources :subscriptions do
+    member do
+      post :sync
+    end
+  end
   resources :videos, as: :items do
     member do
       post :fetch

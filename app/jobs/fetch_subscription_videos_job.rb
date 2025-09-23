@@ -1,5 +1,7 @@
 class FetchSubscriptionVideosJob < ApplicationJob
   def perform(subscription)
+    subscription.syncing!
+
     items = YoutubeService.extract_videos(subscription.url)
     items.each do |item|
       puts item
@@ -10,7 +12,10 @@ class FetchSubscriptionVideosJob < ApplicationJob
       video.duration = item[:duration]
       video.thumbnail_url = item[:thumbnail]
       video.save!
-      puts video.id
     end
+
+    subscription.done!
+  rescue
+    subscription.failed!
   end
 end

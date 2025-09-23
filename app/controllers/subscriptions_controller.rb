@@ -3,6 +3,11 @@ class SubscriptionsController < ApplicationController
     @subscriptions = Subscription.all
   end
 
+  def sync
+    @subscription = Subscription.find(params[:id])
+    @subscription.enqueue_fetch_videos
+  end
+
   def new
     @subscription = Subscription.new
   end

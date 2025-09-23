@@ -7,6 +7,7 @@ class Subscription < ApplicationRecord
   validates :reference, presence: true
 
   enum :kind, { channel: 0, playlist: 1 }
+  enum :sync_status, { done: 0, enqueued: 1, syncing: 2, failed: 3 }
 
   before_validation :extract_info_from_url
   after_create :enqueue_fetch_metadata
@@ -17,6 +18,7 @@ class Subscription < ApplicationRecord
   end
 
   def enqueue_fetch_videos
+    enqueued!
     FetchSubscriptionVideosJob.perform_later(self)
   end
 

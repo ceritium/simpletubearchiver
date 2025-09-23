@@ -13,19 +13,22 @@
             <%= subscription.description %>
           </p>
           <div class="d-flex justify-content-between align-items-center mt-3">
-            <small class="text-muted">
-              <% if subscription.active? %>
-                <span class="badge bg-success">Active</span>
-              <% else %>
-                <span class="badge bg-secondary">Inactive</span>
+            <% case subscription.sync_status%>
+            <% when "done", "failed" %>
+              <%= button_to "sync", sync_subscription_path(subscription), method: :post, class: "btn btn-outline-info" %>
+              <% if subscription.failed? %>
+                <span class="badge bg-danger"> sync failed </span>
               <% end %>
-            </small>
-            <%= button_to subscription_path(subscription), 
-                method: :delete, 
+            <% else  %>
+              <span class="badge bg-warning text-dark"><%= subscription.sync_status %></span>
+            <% end %>
+
+            <%= button_to subscription_path(subscription),
+                method: :delete,
                 class: "btn btn-outline-danger btn-sm",
                 data: { 
                   confirm: "Are you sure you want to delete '#{subscription.name}'? This action cannot be undone.",
-                  disable_with: "Deleting..." 
+                  disable_with: "Deleting..."
                 } do %>
               <i class="bi bi-trash3"></i> Delete
             <% end %>
